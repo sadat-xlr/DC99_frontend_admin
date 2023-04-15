@@ -14,7 +14,7 @@ import BlogSection from 'containers/Agency/BlogSection';
 import TestimonialSection from 'containers/Agency/TestimonialSection';
 import TeamSection from 'containers/Agency/TeamSection';
 import VideoSection from 'containers/Agency/VideoSection';
-import NewsletterSection from 'containers/Agency/NewsletterSection';
+import News from 'containers/Agency/News';
 import QualitySection from 'containers/Agency/QualitySection';
 import Footer from 'containers/Agency/Footer';
 import { DrawerProvider } from 'common/contexts/DrawerContext';
@@ -56,7 +56,7 @@ const Agency = () => {
           <TestimonialSection />
           <TeamSection />
           <FaqSection />
-          <NewsletterSection />
+          <News />
           <Footer />
         </AgencyWrapper>
         {/* End of agency wrapper section */}
