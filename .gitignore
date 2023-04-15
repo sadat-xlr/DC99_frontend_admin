@@ -3,6 +3,7 @@
 **/config/*.pem
 **/config/*.env
 API/
+**/.next/
 **/TempImages
 *.env
 *.sh            
