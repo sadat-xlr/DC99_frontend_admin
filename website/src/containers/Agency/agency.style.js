@@ -1,12 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import {
-  width,
-  height,
-  color,
-  space,
-  boxShadow,
-  borderRadius,
-} from 'styled-system';
+import { width, height, color, space, boxShadow, borderRadius } from 'styled-system';
 import { themeGet } from '@styled-system/theme-get';
 
 /* agency global style */
@@ -32,7 +25,20 @@ const GlobalStyle = createGlobalStyle`
         width: 320px !important;
       }
       .reusecore-drawer__close {
-        
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        > button {
+          box-shadow: 0px 8px 38px 0px rgba(16, 172, 132, 0.5);
+          transition: all 0.3s ease;
+          svg {
+            width: 22px;
+            height: 22px;
+          }
+          &:hover {
+            opacity: 0.9;
+          }
+        }
       }
       .scrollspy__menu {
         padding: 60px 71px;

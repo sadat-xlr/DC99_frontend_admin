@@ -5,11 +5,13 @@ import Heading from 'common/components/Heading';
 import Input from 'common/components/Input';
 import Button from 'common/components/Button';
 import Container from 'common/components/UI/Container';
-import NewsWrapper, { NewsletterForm } from './news.style';
+import NewsletterSectionWrapper, {
+  NewsletterForm,
+} from './newsletterSection.style';
 
-const News = ({ sectionHeader, sectionTitle, btnStyle }) => {
+const NewsletterSection = ({ sectionHeader, sectionTitle, btnStyle }) => {
   return (
-    <NewsWrapper id="news">
+    <NewsletterSectionWrapper id="newsletterSection">
       <Container>
         <Box {...sectionHeader}>
           <Heading content="Subscribe Newsletter" {...sectionTitle} />
@@ -26,19 +28,19 @@ const News = ({ sectionHeader, sectionTitle, btnStyle }) => {
           </NewsletterForm>
         </Box>
       </Container>
-    </NewsWrapper>
+    </NewsletterSectionWrapper>
   );
 };
 
-// News style props
-News.propTypes = {
+// NewsletterSection style props
+NewsletterSection.propTypes = {
   sectionHeader: PropTypes.object,
   sectionTitle: PropTypes.object,
   sectionSubTitle: PropTypes.object,
 };
 
-// News default style
-News.defaultProps = {
+// NewsletterSection default style
+NewsletterSection.defaultProps = {
   // section header default style
   sectionHeader: {
     mb: '56px',
@@ -61,4 +63,4 @@ News.defaultProps = {
   },
 };
 
-export default News;
+export default NewsletterSection;
