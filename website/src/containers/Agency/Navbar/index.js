@@ -1,128 +1,122 @@
-import React, { useContext, useState } from 'react';
-import { Modal } from '@nextui-org/react';
-import PropTypes from 'prop-types';
-import NavbarWrapper from 'common/components/Navbar';
-import Drawer from 'common/components/Drawer';
+import React, { useState, useRef } from 'react';
+import Fade from 'react-reveal/Fade';
+import ScrollSpyMenu from 'common/components/ScrollSpyMenu';
+import Scrollspy from 'react-scrollspy';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
+import { Icon } from 'react-icons-kit';
+import { androidMenu } from 'react-icons-kit/ionicons/androidMenu';
+import { androidClose } from 'react-icons-kit/ionicons/androidClose';
+import Link from 'common/components/Link';
 import Button from 'common/components/Button';
 import Logo from 'common/components/UIElements/Logo';
-import HamburgMenu from 'common/components/HamburgMenu';
-import ScrollSpyMenu from 'common/components/ScrollSpyMenu';
-import { Container } from './navbar.style';
-import SearchPanel from '../SearchPanel';
-import LoginModal from '../LoginModal';
-import CopyrightSection from '../CopyrightsSection';
+import Container from 'common/components/UI/ContainerTwo';
+import NavbarWrapper, {
+  MenuArea,
+  MobileMenu,
+  NavbarRight,
+} from './navbar.style';
+import LogoImage from 'common/assets/image/agencyDigital/logo.png';
 
-import LogoImage from 'common/assets/image/agency/logo.png';
+import { data } from 'common/data/AgencyDigital';
 
-import { DrawerContext } from 'common/contexts/DrawerContext';
+const Navbar = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
 
-import data from 'common/data/Agency/';
+  const scrollItems = [];
 
-const Navbar = ({ navbarStyle, logoStyle }) => {
-  const [opened, setOpened] = React.useState(false);
-  const [loginModal, setLoginModal] = useState(false);
-  const handler = () => setOpened(true);
-  const loginUser = () => setLoginModal(true);
+  data.navItems.forEach((item) => {
+    scrollItems.push(item.path.slice(1));
+  });
 
-  const closeHandler = () => {
-    setOpened(false);
-    setLoginModal(false);
+  const handleMobileMenu = () => {
+    setMobileMenu(!mobileMenu);
   };
 
-  const { state, dispatch } = useContext(DrawerContext);
-
-  // Toggle drawer
-  const toggleHandler = () => {
-    dispatch({
-      type: 'TOGGLE',
-    });
+  const handleHandleMenuClose = () => {
+    setMobileMenu(false);
   };
 
   return (
-    <NavbarWrapper {...navbarStyle}>
+    <NavbarWrapper className="agencyModern-navbar navbar">
       <Container>
         <Logo
-          href="#"
+          href="/agencydigital"
           logoSrc={LogoImage}
-          title="Agency"
-          logoStyle={logoStyle}
+          title="Agency Digital"
+          className="main-logo"
         />
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            variant="textButton"
-            onClick={handler}
-            icon={<i className="flaticon-magnifying-glass" />}
-            aria-label="search"
-          />
-          <Button
-            variant="textButton"
-            onClick={loginUser}
-            icon={<i className="flaticon-user" />}
-            aria-label="login"
-          />
-          <Drawer
-            width="420px"
-            placement="right"
-            drawerHandler={<HamburgMenu />}
-            toggleHandler={toggleHandler}
-            open={state.isOpen}
-            duration={500}
-          >
-            <ScrollSpyMenu
-              menuItems={data.menuItems}
-              drawerClose={true}
-              offset={-100}
-            />
-            <CopyrightSection />
-          </Drawer>
-        </div>
+        {/* end of logo */}
 
-        <Modal
-          blur
-          fullScreen
-          closeButton
-          aria-labelledby="Search Panel"
-          open={opened}
-          onClose={closeHandler}
-          justify="center"
-          css={{ paddingTop: '0 !important', borderRadius: '0 !important' }}
-        >
-          <SearchPanel />
-        </Modal>
+        <MenuArea>
+          <ScrollSpyMenu
+            className="menu-items menu-left"
+            menuItems={data.navItems}
+            offset={-84}
+          />
+          <NavbarRight>
+            <li>
+              <Link href="#">About Us</Link>
+            </li>
+          </NavbarRight>
+          {/* end of main menu */}
 
-        <Modal
-          blur
-          width="1170px"
-          closeButton
-          aria-labelledby="User Panel"
-          open={loginModal}
-          onClose={closeHandler}
-          justify="center"
-          css={{ paddingTop: '0 !important', borderRadius: '0 !important' }}
-        >
-          <LoginModal />
-        </Modal>
+          <Button
+            className="menubar"
+            icon={
+              mobileMenu ? (
+                <Icon
+                  style={{ color: '#02073E' }}
+                  className="bar"
+                  size={32}
+                  icon={androidClose}
+                />
+              ) : (
+                <Fade>
+                  <Icon
+                    style={{ color: '#02073E' }}
+                    className="close"
+                    icon={androidMenu}
+                    size={32}
+                  />
+                </Fade>
+              )
+            }
+            color="#0F2137"
+            variant="textButton"
+            onClick={handleMobileMenu}
+          />
+        </MenuArea>
       </Container>
+
+      {/* start mobile menu */}
+      <MobileMenu className={`mobile-menu ${mobileMenu ? 'active' : ''}`}>
+        <Container>
+          <Scrollspy
+            className="menu"
+            items={scrollItems}
+            offset={-84}
+            currentClassName="active"
+          >
+            {data.navItems.map((menu, index) => (
+              <li key={`menu_key${index}`}>
+                <AnchorLink
+                  href={menu.path}
+                  offset={menu.offset}
+                  onClick={handleHandleMenuClose}
+                >
+                  {menu.label}
+                </AnchorLink>
+              </li>
+            ))}
+            <li>
+              <Link href="#">About Us</Link>
+            </li>
+          </Scrollspy>
+        </Container>
+      </MobileMenu>
+      {/* end of mobile menu */}
     </NavbarWrapper>
   );
-};
-
-// Navbar style props
-Navbar.propTypes = {
-  navbarStyle: PropTypes.object,
-  logoStyle: PropTypes.object,
-};
-
-Navbar.defaultProps = {
-  // Default navbar style
-  navbarStyle: {
-    minHeight: '70px',
-  },
-  // Default logo size
-  logoStyle: {
-    width: '128px',
-    height: 'auto',
-  },
 };
 
 export default Navbar;

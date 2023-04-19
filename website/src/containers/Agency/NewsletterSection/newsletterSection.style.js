@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const NewsWrapper = styled.section`
+const NewsletterSectionWrapper = styled.section`
   padding: 80px 0;
   overflow: hidden;
   @media (max-width: 990px) {
@@ -60,4 +60,4 @@ const NewsletterForm = styled.div`
 
 export { NewsletterForm };
 
-export default NewsWrapper;
+export default NewsletterSectionWrapper;

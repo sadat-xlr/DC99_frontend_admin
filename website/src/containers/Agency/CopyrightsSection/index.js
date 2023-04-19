@@ -18,7 +18,7 @@ const CopyrightSection = () => {
           </li>
         ))}
       </ul>
-      <Text content="Copyrights 2023 @ShadowIT" />
+      <Text content="Copyrights 2019 @RedQ Inc" />
     </CopyrightWrapper>
   );
 };
