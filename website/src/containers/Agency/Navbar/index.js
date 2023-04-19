@@ -40,7 +40,7 @@ const Navbar = () => {
     <NavbarWrapper className="agencyModern-navbar navbar">
       <Container>
         <Logo
-          href="/"
+          href="/agencydigital"
           logoSrc={LogoImage}
           title="Agency Digital"
           className="main-logo"
@@ -55,10 +55,9 @@ const Navbar = () => {
           />
           <NavbarRight>
             <li>
-              <Link href="#">About</Link>
+              <Link href="#">About Us</Link>
             </li>
           </NavbarRight>
-         
           {/* end of main menu */}
 
           <Button

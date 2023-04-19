@@ -4,14 +4,13 @@ import navBg from 'common/assets/image/agencyDigital/nav-bg.png';
 
 const NavbarWrapper = styled.header`
   width: 100%;
-  box-shadow:5px solid;
-  padding: 3px 0 5px;
+  padding: 10px 0 12px;
   background-color: white;
-  opacity: .9;
+  opacity:.95;
   z-index: 9999;
   transition: all 0.3s ease;
   @media only screen and (max-width: 1366px) {
-    padding: 5px 0 7px;
+    padding: 10px 0 12px;
   }
   > div.container {
     width: 100%;
