@@ -40,7 +40,7 @@ const Agency = () => {
         <GlobalStyle />
         {/* End of agency head section */}
         {/* Start agency wrapper section */}
-        <ContentWrapper>
+        {/* <ContentWrapper> */}
           <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
             <DrawerProvider>
               <Navbar />
@@ -58,7 +58,7 @@ const Agency = () => {
           <FaqSection />
           <NewsletterSection />
           <Footer />
-        </ContentWrapper>
+        {/* </ContentWrapper> */}
         {/* End of agency wrapper section */}
       </Fragment>
     </ThemeProvider>
