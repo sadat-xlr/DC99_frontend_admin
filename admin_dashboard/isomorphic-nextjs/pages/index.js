@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -7,34 +7,60 @@ import Checkbox from '@iso/components/uielements/checkbox';
 import Button from '@iso/components/uielements/button';
 import IntlMessages from '@iso/components/utility/intlMessages';
 import jwtConfig from '@iso/config/jwt.config';
-import FirebaseLogin from '@iso/containers/FirebaseForm/FirebaseForm';
-import Auth0 from '../authentication/Auth0';
+// import FirebaseLogin from '@iso/containers/FirebaseForm/FirebaseForm';
+// import Auth0 from '../authentication/Auth0';
+
+import jwtAuthentication from '../authentication/jwtAuthentication';
 import authActions from '../authentication/actions';
 import SignInStyleWrapper from '../styled/SignIn.styles';
 const { login } = authActions;
 export default function SignInPage(props) {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [errorMessage, setErrorMessage] = useState(null); // Add state for error message
+  const [successMessage, setSuccessMessage] = useState(null); // Add state for success message
+
   const handleLogin = e => {
     e.preventDefault();
     dispatch(login(true));
   };
 
-  const handleJWTLogin = () => {
+  const handleJWTLogin = async() => {
     const { jwtLogin, history } = props;
     const userInfo = {
-      username:
+      email:
         (typeof window === 'object' && document.getElementById('inputUserName').value) ||
         '',
       password:
         (typeof window === 'object' && document.getElementById('inpuPassword').value) ||
         '',
     };
-    // jwtLogin(history, userInfo);
+    try {
+      // Call jwtAuthentication.login with user info
+      const result = await jwtAuthentication.login(userInfo);
+      // If authentication is successful
+      console.log(result.token)
+      if (result.success) {
+        // Redirect to the desired page using Next.js router
+        router.push('/dashboard'); // Replace '/dashboard' with the desired URL
+        setSuccessMessage('Login successful!'); // Set success message in state
+        setErrorMessage(null)
+     
+      } else {
+        // Handle authentication failure
+        console.error(result.message);   setErrorMessage(result.message); // Set error message in state
+     
+      }
+    } catch (error) {
+      // Handle any error that may occur during authentication
+      console.error('Error during authentication:', error);
+    }
   };
 
   return (
     <SignInStyleWrapper className="isoSignInPage">
+      
       <div className="isoLoginContentWrapper">
         <div className="isoLoginContent">
           <div className="isoLogoWrapper">
@@ -53,8 +79,7 @@ export default function SignInPage(props) {
                 placeholder="Username"
                 defaultValue="demo@gmail.com"
               />
-            </div>
-
+           </div>
             <div className="isoInputWrapper">
               <Input
                 id="inpuPassword"
@@ -64,7 +89,38 @@ export default function SignInPage(props) {
                 defaultValue="demodemo"
               />
             </div>
+            <div>
+      {/* Render error message if exists */}
+      {errorMessage && (
+        <div
+          style={{
+            backgroundColor: '#f8d7da',
+            color: '#721c24',
+            border: '1px solid #f5c6cb',
+            padding: '8px',
+            borderRadius: '4px',
+            margin: '8px 0',
+          }}
+        >
+          <p style={{ margin: '0' }}>{errorMessage}</p>
+        </div>
+      )}{/* Render error message if exists */}
+     {successMessage && (
+  <div
+    style={{
+      backgroundColor: '#d2f0d7', // Update to green-ish background color
+      color: '#228b22', // Update to green-ish text color
+      border: '1px solid #90ee90', // Update to green-ish border color
+      padding: '8px',
+      borderRadius: '4px',
+      margin: '8px 0',
+    }}
+  >
+    <p style={{ margin: '0' }}>{successMessage}</p>
+  </div>
+)}
 
+    </div>
             <div className="isoInputWrapper isoLeftRightComponent">
               <Checkbox>
                 <IntlMessages id="page.signInRememberMe" />
@@ -77,11 +133,12 @@ export default function SignInPage(props) {
               </Button>
             </div>
 
+
             <p className="isoHelperText">
               <IntlMessages id="page.signInPreview" />
             </p>
 
-            <div className="isoInputWrapper isoOtherLogin">
+            {/* <div className="isoInputWrapper isoOtherLogin">
               <Button
                 onClick={handleLogin}
                 type="primary"
@@ -109,7 +166,7 @@ export default function SignInPage(props) {
                 history={router}
                 login={token => dispatch(login(token))}
               />
-            </div>
+            </div> */}
             <div className="isoCenterComponent isoHelperWrapper">
               <Link href="/forgotpassword">
                 <div className="isoForgotPass">

@@ -6,6 +6,7 @@ function getHost(req) {
   const { host } = req.headers;
 
   if (host.startsWith('localhost')) {
+    console.log({host})
     return `http://${host}`;
   }
   return `https://${host}`;

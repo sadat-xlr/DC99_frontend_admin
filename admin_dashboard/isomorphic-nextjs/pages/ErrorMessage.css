@@ -1,0 +1,11 @@
+.isoErrorMessage {
+    background-color: #ffcccc; /* Background color */
+    color: #ff0000; /* Text color */
+    padding: 10px; /* Padding around the error message */
+    margin-top: 10px; /* Margin at the top of the error message */
+    border-radius: 5px; /* Border radius to round the corners */
+  }
+  
+  .isoErrorMessageText {
+    margin: 0; /* Reset margin on the paragraph element */
+  }

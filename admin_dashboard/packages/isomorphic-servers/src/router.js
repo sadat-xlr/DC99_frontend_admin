@@ -39,15 +39,20 @@ const publicRoutes = [
 function PrivateRoute({ children, ...rest }) {
   let location = useLocation();
   const isLoggedIn = useSelector(state => state.Auth.idToken);
-  if (isLoggedIn) return <Route {...rest}>{children}</Route>;
-  return (
-    <Redirect
-      to={{
-        pathname: '/signin',
-        state: { from: location },
-      }}
-    />
-  );
+  const hasToken = localStorage.getItem('token') !== null; // Check for token in localStorage
+  console.log(hasToken)
+  if (isLoggedIn || hasToken) { // Check if user is authenticated through Redux or localStorage
+    return <Route {...rest}>{children}</Route>;
+  } else {
+    return (
+      <Redirect
+        to={{
+          pathname: '/signin',
+          state: { from: location },
+        }}
+      />
+    );
+  }
 }
 export default function Routes() {
   return (

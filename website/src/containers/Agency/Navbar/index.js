@@ -15,9 +15,9 @@ import NavbarWrapper, {
   MobileMenu,
   NavbarRight,
 } from './navbar.style';
-import LogoImage from 'common/assets/image/agencyDigital/logo.png';
+import LogoImage from 'common/assets/image/agency/logo.png';
 
-import { data } from 'common/data/AgencyDigital';
+import { data } from 'common/data/Agency';
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -58,7 +58,7 @@ const Navbar = () => {
               <Link href="#">About</Link>
             </li>
           </NavbarRight>
-         
+
           {/* end of main menu */}
 
           <Button
